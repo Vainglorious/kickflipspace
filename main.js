@@ -190,9 +190,15 @@ function animate() {
   const bx = -40 + boardT * 80;
   board.position.x = bx;
 
-  // Arc up by +5 over the meteor between x=-20 and x=+20
-  const inArc = bx >= -20 && bx <= 20;
-  board.position.y = inArc ? 5 * Math.sin(Math.PI * (bx + 20) / 40) : 0;
+  // Arc up by +5 over the meteor between x=-15 and x=+15
+  const inArc = bx >= -15 && bx <= 15;
+  board.position.y = inArc ? 5 * Math.sin(Math.PI * (bx + 15) / 30) : 0;
+
+  // Nose tilt + kickflip between x=-7.5 and x=+7.5
+  const inFlip = bx >= -7.5 && bx <= 7.5;
+  const flipT = inFlip ? (bx + 7.5) / 15 : 0;
+  board.rotation.z = inFlip ? (Math.PI / 180 * 40 * Math.sin(Math.PI * flipT)) : 0;
+  board.rotation.x = inFlip ? (Math.PI * 2 * flipT) : 0;
 
   renderer.render(scene, camera);
 }
